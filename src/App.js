@@ -19,6 +19,8 @@ constructor() {
     showWindow: false,
     userLocation: { lat: 42.3601, lng: -71.0589}
   }
+  console.log('Center Point: ' + this.state.center)
+  console.log('User Data: ' + this.state.query)
 }
 
 // set query to find Place data
@@ -34,6 +36,7 @@ handleAutocompleteSelect = async query => {
   const coordinates = await getLatLng(results[0])
   this.setState({ coordinates })
   this.setState({ placeData: results[0] })
+  console.log('User Data: ' + this.state.query)
 }
 
 // set Marker data to state and show InfoWindow
@@ -46,6 +49,13 @@ onMarkerClick = (props, marker, event) => {
 // close InfoWindow
 onInfoWindowClose = () => {
   this.setState({ showWindow: false })
+}
+
+setCenter = async center => {
+  const results = await geocodeByAddress(center)
+  const coordinates = await getLatLng(results[0])
+  this.setState({ center: coordinates })
+  console.log('Center Point: ' + this.state.center)
 }
 
 render() {
